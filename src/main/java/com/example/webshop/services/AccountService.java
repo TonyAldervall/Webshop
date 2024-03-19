@@ -12,7 +12,7 @@ public class AccountService {
     AccountRepo repo;
     @Autowired
     AccountSessionManager accountSessionManager;
-    public boolean checkLogin(String email, String password){
+    public boolean login(String email, String password){
         List<Account> list = repo.findAll();
         boolean successful = false;
 
@@ -41,5 +41,8 @@ public class AccountService {
     public void createAccount(String email, String username, String password){
         Account account = new Account(email, username, password);
         repo.save(account);
+    }
+    public boolean sessionNull(){
+        return accountSessionManager.getCurrentUser() == null;
     }
 }

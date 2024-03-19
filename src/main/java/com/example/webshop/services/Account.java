@@ -11,11 +11,14 @@ public class Account {
     private String email;
     private String username;
     private String password;
+    @OneToOne
+    private Cart cart;
 
     public Account(String email, String username, String password) {
         this.email = email;
         this.username = username;
         this.password = password;
+        this.cart = new Cart(this);
     }
     public Account(){
 
@@ -53,12 +56,22 @@ public class Account {
         this.password = password;
     }
 
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
     @Override
     public String toString() {
         return "Account{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", cart=" + cart +
                 '}';
     }
 }
