@@ -3,7 +3,8 @@ package com.example.webshop.services;
 import jakarta.persistence.*;
 import org.springframework.web.context.annotation.SessionScope;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="cart")
@@ -12,10 +13,10 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @OneToMany
-    private List<Product> productList;
     @OneToOne
     private Account account;
+    @OneToMany(mappedBy ="cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<CartItem> cartItems = new HashSet<>();
 
     public Cart(Account account){
         this.account = account;
@@ -32,19 +33,28 @@ public class Cart {
         this.id = id;
     }
 
-    public List<Product> getProductList() {
-        return productList;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setProductList(List<Product> productList) {
-        this.productList = productList;
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public Set<CartItem> getCartItems() {
+        return cartItems;
+    }
+
+    public void setCartItems(Set<CartItem> cartItems) {
+        this.cartItems = cartItems;
     }
 
     @Override
     public String toString() {
         return "Cart{" +
                 "id=" + id +
-                ", productList=" + productList +
+                ", account=" + account +
+                ", cartItems=" + cartItems +
                 '}';
     }
 }

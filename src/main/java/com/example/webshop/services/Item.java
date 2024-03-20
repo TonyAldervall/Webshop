@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name="product")
-public class Product {
+public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -13,13 +13,13 @@ public class Product {
     @ManyToOne
     private Category category;
 
-    public Product(String name, int price, Category category) {
+    public Item(String name, int price, Category category) {
         this.name = name;
         this.price = price;
         this.category = category;
     }
 
-    public Product() {
+    public Item() {
 
     }
 
@@ -49,7 +49,7 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" +
+        return "Item{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", price=" + price +

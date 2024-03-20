@@ -1,11 +1,11 @@
 package com.example.webshop.services;
 
-import com.example.webshop.database.ProductRepo;
+import com.example.webshop.database.ItemRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ProductService {
+public class ItemService {
     @Autowired
-    ProductRepo repo;
+    ItemRepo repo;
 }
