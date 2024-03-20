@@ -11,7 +11,7 @@ public class Account {
     private String email;
     private String username;
     private String password;
-    @OneToOne
+    @OneToOne(mappedBy = "account")
     private Cart cart;
 
     public Account(String email, String username, String password) {

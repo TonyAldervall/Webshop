@@ -6,6 +6,16 @@
 </head>
 <body>
 <h1>Welcome <span th:text="${user}"></span>!</h1>
-<p>this is a paragraph.</p>
+
+<label for="search">Search</label>
+<input type="text" placeholder="Search for an item..." id="search">
+
+
+<h2>Categories:</h2>
+
+<h3 th:each="c:${categories}">
+    <a th:href="@{'/category/' + ${c.getId()}}" th:text="${c.getName()}"></a>
+</h3>
+
 </body>
 </html>

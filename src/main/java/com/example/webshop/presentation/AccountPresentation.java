@@ -39,7 +39,7 @@ public class AccountPresentation {
     @PostMapping("/login")
     public String postLogin(@RequestParam String email, @RequestParam String password, Model m){
         if(service.login(email, password)){
-            return "redirect:/categories";
+            return "redirect:/category";
         }
         else {
             m.addAttribute("errormessage", "Wrong email or password.");
