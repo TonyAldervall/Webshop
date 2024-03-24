@@ -22,7 +22,7 @@ public class AccountPresentation {
             return "redirect:/login";
         }
         else{
-            return "redirect:/categories";
+            return "redirect:/category";
         }
     }
     @GetMapping("/login")
@@ -32,7 +32,7 @@ public class AccountPresentation {
             return "/login";
         }
         else{
-            return "redirect:/categories";
+            return "redirect:/category";
         }
     }
 
