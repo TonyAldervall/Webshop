@@ -5,14 +5,13 @@
     <title th:text="${title}"></title>
 </head>
 <body>
-<h1 th:text="${category}"></h1>
+<h1 th:text="${header}"></h1>
 <label for="search">Search</label>
 <input type="text" placeholder="Search for an item..." id="search">
 
 <h3 th:each="i:${items}">
-    <a th:href="@{'/category/' + ${categoryid} + '/' + ${i.getId()}}" th:text="${i.getName()}"></a> <span th:text="${i.getPrice()}"></span>kr
+    <a th:href="@{'/category/' + ${categorylowercase} + '/' + ${i.getId()}}" th:text="${i.getName()}"></a> <span th:text="${i.getPrice()}"></span>kr
 </h3>
-
 
 </body>
 </html>

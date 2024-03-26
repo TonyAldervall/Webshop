@@ -14,7 +14,7 @@
 <h2>Categories:</h2>
 
 <h3 th:each="c:${categories}">
-    <a th:href="@{'/category/' + ${c.getId()}}" th:text="${c.getName()}"></a>
+    <a th:href="@{'/category/' + ${c.getName().toLowerCase()}}" th:text="${c.getName()}"></a>
 </h3>
 
 </body>
