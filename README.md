@@ -1,4 +1,2 @@
 # Webshop
-webshop project for school.
-
-yes, the pages are supposed to be ugly :)
+webshop project for school, without CSS and minimal JS.
