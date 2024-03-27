@@ -36,7 +36,6 @@ public class CategoryPresentation {
         m.addAttribute("items", service.findAllByCategoryId(categoryId));
         m.addAttribute("title", "Tony's Webshop - " + categoryName);
         m.addAttribute("header", categoryName);
-        m.addAttribute("categorylowercase", category);
         return "items";
     }
 }

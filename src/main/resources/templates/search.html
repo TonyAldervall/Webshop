@@ -2,19 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${title}"></title>
+    <title>Tony's Webbshop - Search</title>
 </head>
 <body>
-<h1 th:text="${header}"></h1>
+<h1>Search</h1>
 <form method="post" action="/search">
     <label for="search">Search: </label>
-    <input type="text" placeholder="Search for an item..." size="22" id="search" name="search">
+    <input type="text" placeholder="Search for a different item..." size="22" id="search" name="search">
     <button type="submit"></button>
 </form>
+
+<p>Result: <span th:text="${noresult}"></span></p>
 
 <h3 th:each="i:${items}">
     <a th:href="@{'/category/' + ${i.getCategory().getName().toLowerCase} + '/' + ${i.getId()}}" th:text="${i.getName()}"></a> <span th:text="@{${i.getPrice()} + 'kr'}"></span>
 </h3>
-
 </body>
 </html>

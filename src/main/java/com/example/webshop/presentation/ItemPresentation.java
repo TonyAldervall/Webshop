@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 public class ItemPresentation {
     @Autowired
@@ -25,8 +27,25 @@ public class ItemPresentation {
     }
     @PostMapping("/category/{category}/{itemId}")
     public String addToCart(@PathVariable String category, @PathVariable int itemId, @RequestParam int quantity, Model m){
-        cartItemService.addItemToCart(itemId, quantity);
-        m.addAttribute("confirm", "Item added to cart!");
+        if(cartItemService.addItemToCart(itemId, quantity)){
+            m.addAttribute("confirm", "Item added to cart!");
+        }
+        else{
+            m.addAttribute("confirm", "Item is already in cart!");
+        }
         return itemService.getPageInfo(category, itemId, m);
+    }
+    @PostMapping("/search")
+    public String search(@RequestParam String search, Model m) {
+        List<Item> searchResult = itemService.itemContainsSearch(search);
+        if(searchResult.isEmpty()){
+        m.addAttribute("noresult", "No items matched the search.");
+        m.addAttribute("items", null);
+        }
+        else{
+            m.addAttribute("noresult", null);
+            m.addAttribute("items", searchResult);
+        }
+        return "search";
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,5 +25,17 @@ public class ItemService {
         m.addAttribute("item", item);
         m.addAttribute("url", "/category/" + category + "/" + itemId);
         return "itempage";
+    }
+    public List<Item> itemContainsSearch(String search){
+        List<Item> itemList = repo.findAll();
+        List<Item> matchingList = new ArrayList<>();
+
+        for(Item i : itemList){
+            if(i.getName().toLowerCase().contains(search.toLowerCase())){
+                matchingList.add(i);
+            }
+        }
+
+        return matchingList;
     }
 }

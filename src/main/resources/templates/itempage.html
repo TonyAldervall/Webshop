@@ -5,10 +5,14 @@
     <title th:text="${title}"></title>
 </head>
 <body>
+<h1 th:text="${name}"></h1>
+<form method="post" action="/search">
+    <label for="search">Search: </label>
+    <input type="text" placeholder="Search for a different item..." size="22" id="search" name="search">
+    <button type="submit"></button>
+</form>
+<h2><span th:text="@{${price} + 'kr'}"></span></h2>
 <form method="post" th:action="@{'/category/' + ${category} + '/' + ${itemId}}">
-    <h1 th:text="${name}"></h1>
-    <h2><span th:text="${price}"></span>kr</h2>
-
     <button type="button" onclick="decreaseQuantity()">-</button>
     <input type="text" name="quantity" id="quantity" value="1" readonly>
     <button type="button" onclick="increaseQuantity()">+</button>

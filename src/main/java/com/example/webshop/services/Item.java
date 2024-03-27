@@ -47,6 +47,10 @@ public class Item {
         this.price = price;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
     @Override
     public String toString() {
         return "Item{" +
