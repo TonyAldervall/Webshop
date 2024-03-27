@@ -22,14 +22,14 @@
 </form>
 <script>
     function increaseQuantity() {
-        var quantityInput = document.getElementById('quantity');
-        var currentQuantity = parseInt(quantityInput.value);
+        let quantityInput = document.getElementById('quantity');
+        let currentQuantity = parseInt(quantityInput.value);
         quantityInput.value = currentQuantity + 1;
     }
 
     function decreaseQuantity() {
-        var quantityInput = document.getElementById('quantity');
-        var currentQuantity = parseInt(quantityInput.value);
+        let quantityInput = document.getElementById('quantity');
+        let currentQuantity = parseInt(quantityInput.value);
         if (currentQuantity > 1) {
             quantityInput.value = currentQuantity - 1;
         }
