@@ -12,6 +12,12 @@
     <button type="submit"></button>
 </form>
 
+<p>______________________________________</p>
+
+<form method="get" action="/category">
+    Go back to categories: <button type="submit">Back</button>
+</form>
+
 <h3 th:each="i:${items}">
     <a th:href="@{'/category/' + ${i.getCategory().getName().toLowerCase} + '/' + ${i.getId()}}" th:text="${i.getName()}"></a> <span th:text="@{${i.getPrice()} + 'kr'}"></span>
 </h3>

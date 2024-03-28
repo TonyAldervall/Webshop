@@ -5,6 +5,39 @@
     <title>Tony's Webshop - Cart</title>
 </head>
 <body>
+<h1>Cart</h1>
+
+<p>______________________________________</p>
+
+<form method="get" action="/category">
+    Go back to categories: <button type="submit">Back</button>
+</form>
+
+<h2>Current Cart:</h2>
+
+<h3 th:each="c : ${cartitems}">
+    <form method="post">
+        <a th:href="@{'/category/' + ${c.getItem().getCategory().getName().toLowerCase} + '/' + ${c.getItem().getId()}}" th:text="${c.getItem().getName()}"></a>
+        <span th:text="@{${(c.getItem().getPrice() * c.getQuantity())} + 'kr' + ' Quantity: '}"></span>
+
+        <button type="submit" formaction="/decrease">-</button>
+        <span th:text="${c.getQuantity()}"></span>
+        <button type="submit" formaction="/increase">+</button>
+        <span>&emsp;</span>
+        <button type="submit" formaction="/remove">🗑</button>
+        <input type="hidden" name="cartitemid" th:value="${c.getId()}">
+    </form>
+</h3>
+
+
+
+<h2>
+    <form method=post action="/checkout">
+        <span th:text="@{'Total sum: ' + ${totalsum} + 'kr'}"></span>
+        <button type="submit">Checkout</button>
+    </form>
+</h2>
+
 
 </body>
 </html>

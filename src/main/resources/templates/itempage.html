@@ -5,13 +5,23 @@
     <title th:text="${title}"></title>
 </head>
 <body>
+
 <h1 th:text="${name}"></h1>
+
 <form method="post" action="/search">
     <label for="search">Search: </label>
     <input type="text" placeholder="Search for a different item..." size="22" id="search" name="search">
     <button type="submit"></button>
 </form>
+
+<p>______________________________________</p>
+
+<form method="get" action="/category">
+    Go back to categories: <button type="submit">Back</button>
+</form>
+
 <h2><span th:text="@{${price} + 'kr'}"></span></h2>
+
 <form method="post" th:action="@{'/category/' + ${category} + '/' + ${itemId}}">
     <button type="button" onclick="decreaseQuantity()">-</button>
     <input type="text" name="quantity" id="quantity" value="1" readonly>
@@ -20,21 +30,6 @@
     <input type="hidden" name="itemId" th:value="${itemId}">
     <button type="submit">Add to Cart</button> <span th:text="${confirm}"></span>
 </form>
-<script>
-    function increaseQuantity() {
-        let quantityInput = document.getElementById('quantity');
-        let currentQuantity = parseInt(quantityInput.value);
-        quantityInput.value = currentQuantity + 1;
-    }
-
-    function decreaseQuantity() {
-        let quantityInput = document.getElementById('quantity');
-        let currentQuantity = parseInt(quantityInput.value);
-        if (currentQuantity > 1) {
-            quantityInput.value = currentQuantity - 1;
-        }
-    }
-</script>
 
 </body>
 </html>

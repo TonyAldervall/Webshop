@@ -12,6 +12,12 @@
     <button type="submit"></button>
 </form>
 
+<p>______________________________________</p>
+
+<form method="get" action="/category">
+    Go back to categories: <button type="submit">Back</button>
+</form>
+
 <p>Result: <span th:text="${noresult}"></span></p>
 
 <h3 th:each="i:${items}">
