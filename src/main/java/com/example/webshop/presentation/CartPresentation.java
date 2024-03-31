@@ -1,7 +1,6 @@
 package com.example.webshop.presentation;
 
 import com.example.webshop.services.AccountSessionManager;
-import com.example.webshop.services.CartItem;
 import com.example.webshop.services.CartItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +20,7 @@ public class CartPresentation {
     public String getCart(Model m){
         m.addAttribute("cartitems", service.getMyCartItems());
         m.addAttribute("totalsum", service.getTotalSum());
+        m.addAttribute("emptycart", "");
         return "cart";
     }
     @PostMapping("/increase")
@@ -37,5 +37,16 @@ public class CartPresentation {
     public String remove(@RequestParam(name = "cartitemid") String cartItemId){
         service.removeCartItem(cartItemId);
         return "redirect:cart";
+    }
+    @GetMapping("/checkout")
+    public String getCheckout(Model m){
+        m.addAttribute("cartitems", service.getMyCartItems());
+        m.addAttribute("totalsum", service.getTotalSum());
+        return "checkout";
+    }
+    @PostMapping("/order")
+    public String postOrder(Model m){
+        System.out.println("order placed :)");
+        return "redirect:checkout";
     }
 }

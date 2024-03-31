@@ -18,7 +18,7 @@
 <h3 th:each="c : ${cartitems}">
     <form method="post">
         <a th:href="@{'/category/' + ${c.getItem().getCategory().getName().toLowerCase} + '/' + ${c.getItem().getId()}}" th:text="${c.getItem().getName()}"></a>
-        <span th:text="@{${(c.getItem().getPrice() * c.getQuantity())} + 'kr' + ' Quantity: '}"></span>
+        <span th:text="@{${(c.getItem().getPrice() * c.getQuantity())} + ' kr' + ' Quantity: '}"></span>
 
         <button type="submit" formaction="/decrease">-</button>
         <span th:text="${c.getQuantity()}"></span>
@@ -32,9 +32,10 @@
 
 
 <h2>
-    <form method=post action="/checkout">
-        <span th:text="@{'Total sum: ' + ${totalsum} + 'kr'}"></span>
+    <form method=get action="/checkout">
+        <span th:text="@{'Total sum: ' + ${totalsum} + ' kr'}"></span>
         <button type="submit">Checkout</button>
+        <span th:text="${emptycart}"></span>
     </form>
 </h2>
 

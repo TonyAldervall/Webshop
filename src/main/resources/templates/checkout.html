@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tony's Webshop - Checkout</title>
+</head>
+<body>
+<h1>Checkout</h1>
+<ol>
+    <li th:each="c : ${cartitems}" th:text="@{${c.getItem().getName()} + ' x ' + ${c.getQuantity()} + '&emsp;' + ${c.getItem().getPrice()} + ' kr'}"></li>
+</ol>
+<p th:text="@{'Total: ' + ${totalsum} + ' kr'}"></p>
+<form method="get" action="/cart">
+    <button type="submit">Back</button>
+    <span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+    <form method="post" action="/order">
+        <button type="submit">Place Order</button>
+    </form>
+</form>
+
+
+</body>
+</html>

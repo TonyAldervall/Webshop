@@ -55,7 +55,6 @@ public class Cart {
         return "Cart{" +
                 "id=" + id +
                 ", account=" + account +
-                ", cartItems=" + cartItems +
                 '}';
     }
 }

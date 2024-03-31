@@ -1,8 +1,10 @@
 package com.example.webshop.services;
 
+import com.example.webshop.database.AccountRepo;
 import com.example.webshop.database.CartItemRepo;
 import com.example.webshop.database.CartRepo;
 import com.example.webshop.database.ItemRepo;
+import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,8 @@ public class CartItemService {
     CartRepo cartRepo;
     @Autowired
     ItemRepo itemRepo;
+    @Autowired
+    AccountRepo accountRepo;
     @Autowired
     AccountSessionManager manager;
     public boolean addItemToCart(int itemId, int quantity){
@@ -63,13 +67,23 @@ public class CartItemService {
     @Transactional
     public void removeCartItem(String id){
         Cart currentCart = manager.getCurrentUser().getCart();
+        System.out.println(id);
         CartItem cartItemToRemove = null;
         for(CartItem cartItem : currentCart.getCartItems()){
             if(cartItem.getId() == Integer.parseInt(id)){
                 cartItemToRemove = cartItem;
+                break;
             }
         }
-        currentCart.getCartItems().remove(cartItemToRemove);
-        cartRepo.save(manager.getCurrentUser().getCart());
+
+        if (cartItemToRemove != null) {
+            System.out.println(cartItemToRemove);
+            currentCart.getCartItems().remove(cartItemToRemove);
+            System.out.println(currentCart.getCartItems());
+            cartItemRepo.delete(cartItemToRemove);
+
+        } else {
+            System.out.println("CartItem with ID " + id + " not found in the currentCart.");
+        }
     }
 }
