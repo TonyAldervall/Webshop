@@ -1,6 +1,7 @@
 package com.example.webshop.services;
 
-import com.example.webshop.database.ItemRepo;
+import com.example.webshop.entity.Item;
+import com.example.webshop.repository.ItemRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;

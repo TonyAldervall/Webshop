@@ -1,4 +1,4 @@
-package com.example.webshop.services;
+package com.example.webshop.entity;
 
 import jakarta.persistence.*;
 

@@ -1,5 +1,6 @@
 package com.example.webshop.presentation;
 
+import com.example.webshop.entity.Item;
 import com.example.webshop.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,15 +19,18 @@ public class ItemPresentation {
     @Autowired
     CartItemService cartItemService;
     @Autowired
-    AccountSessionManager manager;
+    AccountService accountService;
 
     @GetMapping("/category/{category}/{itemId}")
     public String getItemPage(@PathVariable String category, @PathVariable int itemId, Model m){
+        if(accountService.sessionNull()){
+            return "redirect:../../login";
+        }
         m.addAttribute("confirm", "");
         return itemService.getPageInfo(category, itemId, m);
     }
     @PostMapping("/category/{category}/{itemId}")
-    public String addToCart(@PathVariable String category, @PathVariable int itemId, @RequestParam int quantity, Model m){
+    public String addToCart(@PathVariable String category, @PathVariable int itemId, @RequestParam("quantity") int quantity, Model m){
         if(cartItemService.addItemToCart(itemId, quantity)){
             m.addAttribute("confirm", "Item added to cart!");
         }

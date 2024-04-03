@@ -1,7 +1,9 @@
 package com.example.webshop.presentation;
 
+import com.example.webshop.services.AccountService;
 import com.example.webshop.services.AccountSessionManager;
 import com.example.webshop.services.CartItemService;
+import com.example.webshop.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,41 +14,37 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class CartPresentation {
     @Autowired
-    CartItemService service;
+    CartItemService itemService;
     @Autowired
-    AccountSessionManager manager;
+    AccountService accountService;
 
     @GetMapping("/cart")
     public String getCart(Model m){
-        m.addAttribute("cartitems", service.getMyCartItems());
-        m.addAttribute("totalsum", service.getTotalSum());
-        m.addAttribute("emptycart", "");
+        if(accountService.sessionNull()){
+            return "redirect:login";
+        }
+        if(itemService.getMyCartItems().isEmpty()){
+            m.addAttribute("emptycart", "Cart is empty, add an item before proceeding to checkout!");
+        }else {
+            m.addAttribute("emptycart", "");
+        }
+        m.addAttribute("cartitems", itemService.getMyCartItems());
+        m.addAttribute("totalsum", itemService.getTotalSum());
         return "cart";
     }
     @PostMapping("/increase")
     public String increase(@RequestParam(name = "cartitemid") String cartItemId){
-        service.increaseQuantity(cartItemId);
+        itemService.increaseQuantity(cartItemId);
         return "redirect:cart";
     }
     @PostMapping("/decrease")
     public String decrease(@RequestParam(name = "cartitemid") String cartItemId){
-        service.decreaseQuantity(cartItemId);
+        itemService.decreaseQuantity(cartItemId);
         return "redirect:cart";
     }
     @PostMapping("/remove")
     public String remove(@RequestParam(name = "cartitemid") String cartItemId){
-        service.removeCartItem(cartItemId);
+        itemService.removeCartItem(cartItemId);
         return "redirect:cart";
-    }
-    @GetMapping("/checkout")
-    public String getCheckout(Model m){
-        m.addAttribute("cartitems", service.getMyCartItems());
-        m.addAttribute("totalsum", service.getTotalSum());
-        return "checkout";
-    }
-    @PostMapping("/order")
-    public String postOrder(Model m){
-        System.out.println("order placed :)");
-        return "redirect:checkout";
     }
 }

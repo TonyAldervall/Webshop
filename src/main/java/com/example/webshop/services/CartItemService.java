@@ -1,17 +1,16 @@
 package com.example.webshop.services;
 
-import com.example.webshop.database.AccountRepo;
-import com.example.webshop.database.CartItemRepo;
-import com.example.webshop.database.CartRepo;
-import com.example.webshop.database.ItemRepo;
-import jakarta.persistence.EntityManager;
+import com.example.webshop.entity.Cart;
+import com.example.webshop.entity.CartItem;
+import com.example.webshop.repository.AccountRepo;
+import com.example.webshop.repository.CartItemRepo;
+import com.example.webshop.repository.CartRepo;
+import com.example.webshop.repository.ItemRepo;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLOutput;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class CartItemService {
@@ -67,8 +66,8 @@ public class CartItemService {
     @Transactional
     public void removeCartItem(String id){
         Cart currentCart = manager.getCurrentUser().getCart();
-        System.out.println(id);
         CartItem cartItemToRemove = null;
+
         for(CartItem cartItem : currentCart.getCartItems()){
             if(cartItem.getId() == Integer.parseInt(id)){
                 cartItemToRemove = cartItem;
@@ -77,9 +76,7 @@ public class CartItemService {
         }
 
         if (cartItemToRemove != null) {
-            System.out.println(cartItemToRemove);
             currentCart.getCartItems().remove(cartItemToRemove);
-            System.out.println(currentCart.getCartItems());
             cartItemRepo.delete(cartItemToRemove);
 
         } else {

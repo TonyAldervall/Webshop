@@ -1,6 +1,7 @@
 package com.example.webshop.services;
 
-import com.example.webshop.database.CategoryRepo;
+import com.example.webshop.entity.Category;
+import com.example.webshop.repository.CategoryRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,38 +48,8 @@ public class CategoryService {
             }
         }
     }
-    public String getCategoryName(int categoryId){
-        switch (categoryId){
-            case 1 -> {
-                return "Headphones";
-            }
-            case 2 -> {
-                return "Speakers";
-            }
-            case 3 -> {
-                return "Computers";
-            }
-            case 4 -> {
-                return "Monitors";
-            }
-            case 5 -> {
-                return "Mice";
-            }
-            case 6 -> {
-                return "Keyboards";
-            }
-            case 7-> {
-                return "Laptops";
-            }
-            case 8 -> {
-                return "Phones";
-            }
-            case 9-> {
-                return "Smartwatches";
-            }
-            default -> {
-                return "Unknown";
-            }
-        }
+    public String getCategoryCapitalized(String categoryLowercase){
+        return categoryLowercase.substring(0,1).toUpperCase() + categoryLowercase.substring(1);
     }
+
 }

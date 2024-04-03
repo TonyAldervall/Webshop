@@ -1,5 +1,6 @@
 package com.example.webshop.services;
 
+import com.example.webshop.entity.Account;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 

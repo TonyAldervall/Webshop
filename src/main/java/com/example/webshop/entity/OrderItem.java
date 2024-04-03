@@ -1,29 +1,29 @@
-package com.example.webshop.services;
+package com.example.webshop.entity;
 
 import jakarta.persistence.*;
 
 @Entity
-public class CartItem {
-
+@Table(name="order_item")
+public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="cart_id")
-    private Cart cart;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="item_id")
+    @JoinColumn(name = "order_id")
+    private Order order;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id")
     private Item item;
+
     private int quantity;
 
-    public CartItem(Cart cart, Item item, int quantity) {
-        this.cart = cart;
+    public OrderItem(Order order, Item item, int quantity) {
+        this.order = order;
         this.item = item;
         this.quantity = quantity;
     }
 
-    public CartItem() {
+    public OrderItem() {
 
     }
 
@@ -35,12 +35,12 @@ public class CartItem {
         this.id = id;
     }
 
-    public Cart getCart() {
-        return cart;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setCart(Cart cart) {
-        this.cart = cart;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public Item getItem() {
@@ -61,8 +61,9 @@ public class CartItem {
 
     @Override
     public String toString() {
-        return "CartItem{" +
+        return "OrderItem{" +
                 "id=" + id +
+                ", order=" + order +
                 ", item=" + item +
                 ", quantity=" + quantity +
                 '}';

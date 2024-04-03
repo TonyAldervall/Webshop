@@ -19,31 +19,31 @@ public class AccountPresentation {
     @GetMapping("/")
     public String getRoot(Model m){
         if(service.sessionNull()){
-            return "redirect:/login";
+            return "redirect:login";
         }
         else{
-            return "redirect:/category";
+            return "redirect:category";
         }
     }
     @GetMapping("/login")
     public String getLogin(Model m){
         if(service.sessionNull()){
             m.addAttribute("errormessage", "");
-            return "/login";
+            return "login";
         }
         else{
-            return "redirect:/category";
+            return "redirect:category";
         }
     }
 
     @PostMapping("/login")
     public String postLogin(@RequestParam String email, @RequestParam String password, Model m){
         if(service.login(email, password)){
-            return "redirect:/category";
+            return "redirect:category";
         }
         else {
             m.addAttribute("errormessage", "Wrong email or password.");
-            return "/login";
+            return "login";
         }
 
     }
@@ -51,21 +51,21 @@ public class AccountPresentation {
     @GetMapping("/createaccount")
     public String getCreateAccount(Model m){
         m.addAttribute("errormessage", "");
-        return "/createaccount";
+        return "createaccount";
     }
 
     @PostMapping("/createaccount")
     public String postCreateAccount(@RequestParam String email, @RequestParam String username, @RequestParam String password, @RequestParam(name = "confirmpassword") String confirmPassword, Model m){
         if(!password.equals(confirmPassword)){
             m.addAttribute("errormessage", "Password doesn't match.");
-            return "/createaccount";
+            return "createaccount";
         } else if (service.accountExists(email)) {
             m.addAttribute("errormessage", "Email is already in use.");
-            return "/createaccount";
+            return "createaccount";
         } else {
             service.createAccount(email, username, password);
             m.addAttribute("errormessage", "");
-            return "/login";
+            return "login";
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.example.webshop.services;
 
-import com.example.webshop.database.AccountRepo;
+import com.example.webshop.entity.Account;
+import com.example.webshop.repository.AccountRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

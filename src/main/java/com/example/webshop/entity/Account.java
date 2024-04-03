@@ -1,6 +1,9 @@
-package com.example.webshop.services;
+package com.example.webshop.entity;
 
 import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="account")
@@ -11,8 +14,10 @@ public class Account {
     private String email;
     private String username;
     private String password;
-    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "account", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private Cart cart;
+    @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
+    private Set<Order> order = new HashSet<>();
 
     public Account(String email, String username, String password) {
         this.email = email;
@@ -62,6 +67,14 @@ public class Account {
 
     public void setCart(Cart cart) {
         this.cart = cart;
+    }
+
+    public Set<Order> getOrder() {
+        return order;
+    }
+
+    public void setOrder(Set<Order> order) {
+        this.order = order;
     }
 
     @Override

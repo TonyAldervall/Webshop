@@ -1,4 +1,4 @@
-package com.example.webshop.services;
+package com.example.webshop.entity;
 
 import jakarta.persistence.*;
 import org.springframework.web.context.annotation.SessionScope;
@@ -16,7 +16,7 @@ public class Cart {
     @OneToOne()
     @JoinColumn(name="account_id")
     private Account account;
-    @OneToMany(mappedBy ="cart", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy ="cart", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<CartItem> cartItems = new HashSet<>();
 
     public Cart(Account account){
