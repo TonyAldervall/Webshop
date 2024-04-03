@@ -15,6 +15,8 @@ public class OrderPresentation {
     OrderService orderService;
     @Autowired
     AccountService accountService;
+    @Autowired
+    EmailSenderService senderService;
 
     @GetMapping("/checkout")
     public String getCheckout(Model m){
@@ -31,7 +33,7 @@ public class OrderPresentation {
     @PostMapping("/order")
     public String postOrder(Model m){
         orderService.placeOrder();
-        orderService.sendEmail();
+        senderService.sendEmail();
         m.addAttribute("orderitems", orderService.getLatestOrderItems());
         return "order";
     }

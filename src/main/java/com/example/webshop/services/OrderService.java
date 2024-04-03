@@ -58,7 +58,4 @@ public class OrderService {
         Order latestOrder = orderRepo.findFirstByAccount_IdOrderByIdDesc(manager.getCurrentUser().getId());
         return latestOrder.getOrderItemList();
     }
-    public void sendEmail(){
-
-    }
 }
