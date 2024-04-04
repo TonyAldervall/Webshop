@@ -61,6 +61,10 @@ public class OrderItem {
 
     @Override
     public String toString() {
-        return getItem().getName() + " x " + getQuantity() + "/t" + (getItem().getPrice() * getQuantity()) + " kr";
+        return "OrderItem{" +
+                "id=" + id +
+                ", item=" + item +
+                ", quantity=" + quantity +
+                '}';
     }
 }

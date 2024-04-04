@@ -14,7 +14,7 @@ public class Account {
     private String email;
     private String username;
     private String password;
-    @OneToOne(mappedBy = "account", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Cart cart;
     @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
     private Set<Order> order = new HashSet<>();

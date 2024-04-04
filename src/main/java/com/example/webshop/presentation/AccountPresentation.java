@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AccountPresentation {
     @Autowired
     AccountService service;
-    @Autowired
-    AccountSessionManager manager;
 
     @GetMapping("/")
     public String getRoot(Model m){

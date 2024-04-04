@@ -2,6 +2,7 @@ package com.example.webshop.services;
 
 import com.example.webshop.entity.OrderItem;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -24,16 +25,24 @@ public class EmailSenderService {
         message.setSubject("Order Confirmation");
         message.setText(generateEmailBody());
 
-        javaMailSender.send(message);
+        try {
+            javaMailSender.send(message);
+        }catch (MailException e){
+            e.printStackTrace();
+        }
     }
-    public String generateEmailBody(){
+    public String generateEmailBody() {
         Set<OrderItem> orderItems = service.getLatestOrderItems();
         int totalAmount = 0;
-        for(OrderItem item : orderItems){
+        StringBuilder builder = new StringBuilder();
+
+        for (OrderItem item : orderItems) {
+            builder.append(item.getItem().getName()).append(" x ").append(item.getQuantity()).append("\t").append(item.getItem().getPrice() * item.getQuantity()).append(" kr\n");
             totalAmount = (item.getItem().getPrice() * item.getQuantity());
         }
-        return "Thank you for your order!" + "/nHi " + manager.getCurrentUser().getUsername()
-                + ",/nYour order has been successffully recieved and is now being processed. below are the details of your purchase:"
-                + orderItems.toString() + "/nTotal: " + totalAmount + " kr";
+        return "Thank you for your order!" + "\nHi " + manager.getCurrentUser().getUsername()
+                + ",\nYour order has been successffully recieved and is now being processed. below are the details of your purchase:\n\n"
+                + builder + "\nTotal: " + totalAmount + " kr";
     }
+
 }
