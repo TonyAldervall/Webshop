@@ -23,5 +23,8 @@
     <a th:href="@{'/category/' + ${c.getName().toLowerCase()}}" th:text="${c.getName()}"></a>
 </h3>
 
+<form action="/logout">
+    <button type="submit">Logout</button>
+</form>
 </body>
 </html>

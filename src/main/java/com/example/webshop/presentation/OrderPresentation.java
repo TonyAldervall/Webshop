@@ -33,7 +33,9 @@ public class OrderPresentation {
     @PostMapping("/order")
     public String postOrder(Model m){
         orderService.placeOrder();
-        senderService.sendEmail();
+        senderService.sendEmail(m);
+
+        m.addAttribute("totalsum", orderService.getTotalSum());
         m.addAttribute("orderitems", orderService.getLatestOrderItems());
         return "order";
     }

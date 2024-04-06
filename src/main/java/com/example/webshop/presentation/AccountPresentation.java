@@ -1,7 +1,7 @@
 package com.example.webshop.presentation;
 
 import com.example.webshop.services.AccountService;
-import com.example.webshop.services.AccountSessionManager;
+import com.example.webshop.services.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class AccountPresentation {
     @Autowired
-    AccountService service;
+    AccountService accountService;
 
     @GetMapping("/")
-    public String getRoot(Model m){
-        if(service.sessionNull()){
+    public String getRoot(){
+        if(accountService.sessionNull()){
             return "redirect:login";
         }
         else{
@@ -25,7 +25,7 @@ public class AccountPresentation {
     }
     @GetMapping("/login")
     public String getLogin(Model m){
-        if(service.sessionNull()){
+        if(accountService.sessionNull()){
             m.addAttribute("errormessage", "");
             return "login";
         }
@@ -36,7 +36,7 @@ public class AccountPresentation {
 
     @PostMapping("/login")
     public String postLogin(@RequestParam String email, @RequestParam String password, Model m){
-        if(service.login(email, password)){
+        if(accountService.login(email, password)){
             return "redirect:category";
         }
         else {
@@ -44,6 +44,11 @@ public class AccountPresentation {
             return "login";
         }
 
+    }
+    @GetMapping("/logout")
+    public String logout(){
+        accountService.logout();
+        return "redirect:login";
     }
 
     @GetMapping("/createaccount")
@@ -57,11 +62,11 @@ public class AccountPresentation {
         if(!password.equals(confirmPassword)){
             m.addAttribute("errormessage", "Password doesn't match.");
             return "createaccount";
-        } else if (service.accountExists(email)) {
+        } else if (accountService.accountExists(email)) {
             m.addAttribute("errormessage", "Email is already in use.");
             return "createaccount";
         } else {
-            service.createAccount(email, username, password);
+            accountService.createAccount(email, username, password);
             m.addAttribute("errormessage", "");
             return "login";
         }

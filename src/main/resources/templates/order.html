@@ -6,7 +6,12 @@
 </head>
 <body>
 <h1>Order Placed!</h1>
-<p>A confirmation email of your order has been sent!</p>
+<p th:text="${emailmessage}"></p>
+
+<ol>
+    <li th:each="o : ${orderitems}" th:text="@{${o.getItem().getName()} + ' x ' + ${o.getQuantity()} + '&emsp;' + ${(o.getItem().getPrice() * o.getQuantity())} + ' kr'}"></li>
+</ol>
+<p th:text="@{'Total: ' + ${totalsum} + ' kr'}"></p>
 
 <form method="get" action="/category">
     <button type="submit">Back</button>

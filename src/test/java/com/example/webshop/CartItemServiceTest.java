@@ -6,18 +6,13 @@ import com.example.webshop.repository.ItemRepo;
 import com.example.webshop.services.AccountSessionManager;
 import com.example.webshop.services.CartItemService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -31,7 +26,7 @@ public class CartItemServiceTest {
     @Mock
     private List<CartItem> mockItemList;
     @Mock
-    Item fakeItem;
+    private Item mockItem;
     @Mock
     private CartItemRepo cartItemRepo;
     @Mock
@@ -51,7 +46,7 @@ public class CartItemServiceTest {
         Item fakeItem2 = new Item("FakeItem2", 3950, fakeCategory);
         Item fakeItem3 = new Item("FakeItem3", 1299, fakeCategory);
         fakeItem2.setId(1);
-        fakeItem = fakeItem2;
+        mockItem = fakeItem2;
         mockItemList = new ArrayList<>();
         mockItemList.add(new CartItem(mockAccount.getCart(), fakeItem1, 1));
         mockItemList.add(new CartItem(mockAccount.getCart(), fakeItem2, 2));
@@ -70,9 +65,9 @@ public class CartItemServiceTest {
 
     @Test
     public void testAddItemToCart(){
-        when(itemRepo.findById(1)).thenReturn(fakeItem);
+        when(itemRepo.findById(1)).thenReturn(mockItem);
         when(manager.getCurrentUser()).thenReturn(mockAccount);
         when(cartItemRepo.save(mockItemList.get(1))).thenReturn(mockItemList.get(0));
-        service.addItemToCart(fakeItem.getId(), 1);
+        service.addItemToCart(mockItem.getId(), 1);
     }
 }

@@ -58,4 +58,13 @@ public class OrderService {
         Order latestOrder = orderRepo.findFirstByAccount_IdOrderByIdDesc(manager.getCurrentUser().getId());
         return latestOrder.getOrderItemList();
     }
+    public long getTotalSum(){
+        Set<OrderItem> orderItems = getLatestOrderItems();
+        long totalSum = 0;
+
+        for(OrderItem orderItem : orderItems){
+            totalSum += ((long) orderItem.getItem().getPrice() * orderItem.getQuantity());
+        }
+        return totalSum;
+    }
 }

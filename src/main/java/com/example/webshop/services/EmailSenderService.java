@@ -6,6 +6,7 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.util.Set;
 
@@ -18,7 +19,7 @@ public class EmailSenderService {
     @Autowired
     AccountSessionManager manager;
 
-    public void sendEmail(){
+    public void sendEmail(Model m){
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("tony.aldervall@iths.se");
         message.setTo(manager.getCurrentUser().getEmail());
@@ -27,7 +28,9 @@ public class EmailSenderService {
 
         try {
             javaMailSender.send(message);
+            m.addAttribute("emailmessage", "A confirmation email of your order has been sent!");
         }catch (MailException e){
+            m.addAttribute("emailmessage", "Was not able to send Email with order.");
             e.printStackTrace();
         }
     }
@@ -41,7 +44,7 @@ public class EmailSenderService {
             totalAmount = (item.getItem().getPrice() * item.getQuantity());
         }
         return "Thank you for your order!" + "\nHi " + manager.getCurrentUser().getUsername()
-                + ",\nYour order has been successffully recieved and is now being processed. below are the details of your purchase:\n\n"
+                + ",\nYour order has been successfully received and is now being processed. below are the details of your purchase:\n\n"
                 + builder + "\nTotal: " + totalAmount + " kr";
     }
 

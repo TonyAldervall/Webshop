@@ -26,6 +26,9 @@ public class AccountService {
         }
         return successful;
     }
+    public void logout(){
+        accountSessionManager.setCurrentUser(null);
+    }
 
     public boolean accountExists(String email){
         List<Account> list = repo.findAll();
