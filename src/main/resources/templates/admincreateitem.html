@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tony's Webshop - Admin - Create Item</title>
+</head>
+<body>
+<h1>Create Item</h1>
+<form method="post" action="/createitem">
+    <label for="name">Name: </label>
+    <input type="text" name="name" id="name"></input>
+    <br></br>
+
+    <label for="price">Price: </label>
+    <input type="number" name="price" id="price"></input>
+    <br></br>
+
+    <label for="category">Category: </label>
+    <select name="category" id="category">
+        <option th:value="${c.getName()}" th:each="c : ${categories}" th:text="${c.getName()}"></option>
+    </select>
+    <br></br>
+
+    <button type="submit" formmethod="get" formaction="/adminhome">Back</button>
+    <span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+    <button type="submit">Create</button>
+    <span th:text="${confirmmessage}"></span>
+</form>
+</body>
+</html>

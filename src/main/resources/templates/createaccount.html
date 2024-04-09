@@ -8,21 +8,23 @@
 <h1>Create Account</h1>
 <form action="/createaccount" method="post">
     <label for="email">Email:</label>
-    <input type="text" placeholder="Enter Email" name="email" id="email" required>
+    <input type="text" placeholder="Enter Email" name="email" id="email">
     <br></br>
 
     <label for="username">Username:</label>
-    <input type="text" placeholder="Enter Username" name="username" id="username" required>
+    <input type="text" placeholder="Enter Username" name="username" id="username">
     <br></br>
 
     <label for="password">Password:</label>
-    <input type="password" placeholder="Enter Password" name="password" id="password" required>
+    <input type="password" placeholder="Enter Password" name="password" id="password">
     <br></br>
 
     <label for="confirmpassword">Confirm Password:</label>
-    <input type="password" placeholder="Confirm Password" name="confirmpassword" id="confirmpassword" required>
+    <input type="password" placeholder="Confirm Password" name="confirmpassword" id="confirmpassword">
     <br></br>
 
+    <button type="submit" formaction="/login">Back</button>
+    <span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
     <button type="submit">Create account</button> <p th:text="${errormessage}"></p>
 </form>
 </body>

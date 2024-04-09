@@ -51,5 +51,8 @@ public class CategoryService {
     public String getCategoryCapitalized(String categoryLowercase){
         return categoryLowercase.substring(0,1).toUpperCase() + categoryLowercase.substring(1);
     }
+    public Category getCategoryById(int id){
+        return repo.findById(id);
+    }
 
 }

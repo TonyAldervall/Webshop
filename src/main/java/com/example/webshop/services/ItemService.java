@@ -1,5 +1,6 @@
 package com.example.webshop.services;
 
+import com.example.webshop.entity.Category;
 import com.example.webshop.entity.Item;
 import com.example.webshop.repository.ItemRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +14,13 @@ import java.util.List;
 @Service
 public class ItemService {
     @Autowired
-    ItemRepo repo;
+    ItemRepo itemRepo;
     public List<Item> findAllByCategoryId(int id){
-        return repo.findAllByCategory_Id(id);
+        return itemRepo.findAllByCategory_Id(id);
     }
 
     public String getPageInfo(@PathVariable String category, @PathVariable int itemId, Model m) {
-        Item item = repo.findById(itemId);
+        Item item = itemRepo.findById(itemId);
         m.addAttribute("title", "Tony's Webshop - " + item.getName());
         m.addAttribute("name", item.getName());
         m.addAttribute("price", item.getPrice());
@@ -28,7 +29,7 @@ public class ItemService {
         return "itempage";
     }
     public List<Item> itemContainsSearch(String search){
-        List<Item> itemList = repo.findAll();
+        List<Item> itemList = itemRepo.findAll();
         List<Item> matchingList = new ArrayList<>();
 
         for(Item i : itemList){
@@ -38,5 +39,9 @@ public class ItemService {
         }
 
         return matchingList;
+    }
+    public void createItem(String name, int price, Category category){
+        Item item = new Item(name, price, category);
+        itemRepo.save(item);
     }
 }

@@ -1,6 +1,9 @@
 package com.example.webshop.presentation;
 
+import com.example.webshop.entity.Category;
 import com.example.webshop.services.AdminService;
+import com.example.webshop.services.CategoryService;
+import com.example.webshop.services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,11 +14,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class AdminPresentation {
     @Autowired
-    AdminService service;
+    AdminService adminService;
+    @Autowired
+    ItemService itemService;
+    @Autowired
+    CategoryService categoryService;
 
     @GetMapping("/adminlogin")
     public String getLogin(Model m) {
-        if(service.sessionNull()) {
+        if(adminService.sessionNull()) {
             m.addAttribute("errormessage", "");
             return "adminlogin";
         }
@@ -26,7 +33,7 @@ public class AdminPresentation {
 
     @PostMapping("/adminlogin")
     public String postLogin(@RequestParam String username, @RequestParam String password, Model m) {
-        if (service.adminLogin(username, password)) {
+        if (adminService.adminLogin(username, password)) {
             return "redirect:adminhome";
         } else {
             m.addAttribute("errormessage", "Wrong username or password.");
@@ -35,30 +42,40 @@ public class AdminPresentation {
     }
     @GetMapping("/adminlogout")
     public String logout() {
-        service.adminLogout();
+        adminService.adminLogout();
         return "redirect:adminlogin";
     }
     @GetMapping("/adminhome")
     public String home(){
-        if(service.sessionNull()){
+        if(adminService.sessionNull()){
             return "redirect:adminlogin";
         }
         else {
             return "adminhome";
         }
     }
-    @GetMapping("/additem")
-    public String getAddItem(){
-        if(service.sessionNull()){
+    @GetMapping("/createitem")
+    public String getCreateItem(Model m){
+        if(adminService.sessionNull()){
             return "redirect:adminlogin";
         }
         else {
-            return "adminadditem";
+            m.addAttribute("confirmmessage", "");
+            m.addAttribute("categories", categoryService.getAllCategories());
+            return "admincreateitem";
         }
+    }
+    @PostMapping("/createitem")
+    public String postCreateItem(@RequestParam String name, @RequestParam int price, @RequestParam("category") String categoryName, Model m){
+        int categoryId = categoryService.getCategoryId(categoryName.toLowerCase());
+        Category category = categoryService.getCategoryById(categoryId);
+        itemService.createItem(name, price, category);
+        m.addAttribute("confirmmessage", "Item was successfully added!");
+        return "admincreateitem";
     }
     @GetMapping("/manageorder")
     public String getManageOrder(){
-        if(service.sessionNull()){
+        if(adminService.sessionNull()){
             return "redirect:adminlogin";
         }
         else {

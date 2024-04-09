@@ -67,4 +67,7 @@ public class OrderService {
         }
         return totalSum;
     }
+    public List<Order> getAllIncompleteOrders(){
+        return orderRepo.findAllByCompleteIsFalseOrderByIdAsc();
+    }
 }
