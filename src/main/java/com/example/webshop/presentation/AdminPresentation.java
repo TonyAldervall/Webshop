@@ -4,6 +4,7 @@ import com.example.webshop.entity.Category;
 import com.example.webshop.services.AdminService;
 import com.example.webshop.services.CategoryService;
 import com.example.webshop.services.ItemService;
+import com.example.webshop.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,8 @@ public class AdminPresentation {
     ItemService itemService;
     @Autowired
     CategoryService categoryService;
+    @Autowired
+    OrderService orderService;
 
     @GetMapping("/adminlogin")
     public String getLogin(Model m) {
@@ -74,12 +77,38 @@ public class AdminPresentation {
         return "admincreateitem";
     }
     @GetMapping("/manageorder")
-    public String getManageOrder(){
+    public String getManageOrder(Model m){
         if(adminService.sessionNull()){
             return "redirect:adminlogin";
         }
         else {
             return "adminmanageorders";
         }
+    }
+    @GetMapping("/completeorders")
+    public String getCompleteOrders(Model m){
+        if(adminService.sessionNull()){
+            return "redirect:adminlogin";
+        }
+        else {
+            m.addAttribute("completeorders", orderService.getAllCompleteOrders());
+            return "admincompleteorders";
+        }
+    }
+    @GetMapping("/incompleteorders")
+    public String getIncompleteOrders(Model m){
+        if(adminService.sessionNull()){
+            return "redirect:adminlogin";
+        }
+        else{
+            m.addAttribute("incompleteorders", orderService.getAllIncompleteOrders());
+            return "adminincompleteorders";
+        }
+    }
+    @PostMapping("/incompleteorders")
+    public String completeOrder(@RequestParam(name = "orderid") int orderId, Model m){
+        orderService.markAsComplete(orderId);
+        m.addAttribute("incompleteorders", orderService.getAllIncompleteOrders());
+        return "adminincompleteorders";
     }
 }

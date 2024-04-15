@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tony's Webshop - Admin - Complete Orders</title>
+</head>
+<body>
+<h1>Complete Orders</h1>
+
+<h3 th:each="c : ${completeorders}">
+    <span th:text="'Order: ' + ${c.getId()} + ', ' + ${c.getAccount().getEmail()}"></span>
+    <div th:each="i : ${c.getOrderItemList()}">
+        <span th:text="${i.getItem().getName()} + ' x ' + ${i.getQuantity()}"></span>
+        <br>
+    </div>
+</h3>
+
+<button onclick="window.location.href = '/adminhome'">Back</button>
+
+</body>
+</html>

@@ -10,4 +10,6 @@ import java.util.List;
 public interface OrderRepo extends JpaRepository<Order, Integer> {
     Order findFirstByAccount_IdOrderByIdDesc(int id);
     List<Order> findAllByCompleteIsFalseOrderByIdAsc();
+    List<Order> findAllByCompleteIsTrueOrderByIdDesc();
+    Order findById(int id);
 }

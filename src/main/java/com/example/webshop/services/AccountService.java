@@ -10,11 +10,11 @@ import java.util.List;
 @Service
 public class AccountService {
     @Autowired
-    AccountRepo repo;
+    AccountRepo accountRepo;
     @Autowired
     AccountSessionManager accountSessionManager;
     public boolean login(String email, String password){
-        List<Account> list = repo.findAll();
+        List<Account> list = accountRepo.findAll();
         boolean successful = false;
 
         for(Account a : list){
@@ -31,7 +31,7 @@ public class AccountService {
     }
 
     public boolean accountExists(String email){
-        List<Account> list = repo.findAll();
+        List<Account> list = accountRepo.findAll();
         boolean exists = false;
 
         for(Account a : list){
@@ -44,7 +44,8 @@ public class AccountService {
     }
     public void createAccount(String email, String username, String password){
         Account account = new Account(email, username, password);
-        repo.save(account);
+        accountRepo.save(account);
+        System.out.println("Account created and saved.");
     }
     public boolean sessionNull(){
         return accountSessionManager.getCurrentUser() == null;

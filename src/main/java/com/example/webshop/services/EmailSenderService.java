@@ -41,7 +41,7 @@ public class EmailSenderService {
 
         for (OrderItem item : orderItems) {
             builder.append(item.getItem().getName()).append(" x ").append(item.getQuantity()).append("\t").append(item.getItem().getPrice() * item.getQuantity()).append(" kr\n");
-            totalAmount = (item.getItem().getPrice() * item.getQuantity());
+            totalAmount += (item.getItem().getPrice() * item.getQuantity());
         }
         return "Thank you for your order!\nHi " + manager.getCurrentUser().getUsername()
                 + ",\nYour order has been successfully received and is now being processed. Below are the details of your purchase:\n\n"

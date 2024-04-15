@@ -23,7 +23,7 @@
     <input type="password" placeholder="Confirm Password" name="confirmpassword" id="confirmpassword">
     <br></br>
 
-    <button type="submit" formaction="/login">Back</button>
+    <button type="button" onclick="window.location.href = '/login'">Back</button>
     <span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
     <button type="submit">Create account</button> <p th:text="${errormessage}"></p>
 </form>

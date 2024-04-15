@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tony's Webshop - Admin - Incomplete Orders</title>
+</head>
+<body>
+<h1>Incomplete Orders</h1>
+
+<h3 th:each="i : ${incompleteorders}">
+    <form method="post" action="/incompleteorders">
+        <span th:text="'Order: ' + ${i.getId()} + ', ' + ${i.getAccount().getEmail()}"></span>
+        <button type="submit">Mark as Complete</button>
+        <input type="hidden" name="orderid" th:value="${i.getId()}">
+    </form>
+
+    <div th:each="k : ${i.getOrderItemList()}">
+        <span th:text="${k.getItem().getName()} + ' x ' + ${k.getQuantity()}"></span>
+        <br>
+    </div>
+</h3>
+
+<button onclick="window.location.href = '/adminhome'">Back</button>
+
+</body>
+</html>

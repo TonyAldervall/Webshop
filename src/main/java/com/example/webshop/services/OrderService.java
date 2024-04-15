@@ -70,4 +70,12 @@ public class OrderService {
     public List<Order> getAllIncompleteOrders(){
         return orderRepo.findAllByCompleteIsFalseOrderByIdAsc();
     }
+    public List<Order> getAllCompleteOrders(){
+        return orderRepo.findAllByCompleteIsTrueOrderByIdDesc();
+    }
+    public void markAsComplete(int orderId){
+        Order order = orderRepo.findById(orderId);
+        order.setComplete(true);
+        orderRepo.save(order);
+    }
 }
