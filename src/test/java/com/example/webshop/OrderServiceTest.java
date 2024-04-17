@@ -2,9 +2,10 @@ package com.example.webshop;
 
 import com.example.webshop.entity.*;
 import com.example.webshop.repository.CartItemRepo;
-import com.example.webshop.repository.ItemRepo;
+import com.example.webshop.repository.OrderItemRepo;
+import com.example.webshop.repository.OrderRepo;
 import com.example.webshop.services.AccountSessionManager;
-import com.example.webshop.services.CartItemService;
+import com.example.webshop.services.OrderService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -15,24 +16,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-public class CartItemServiceTest {
+public class OrderServiceTest {
     @Mock
     private Account mockAccount;
     @Mock
     private List<CartItem> mockItemList;
     @Mock
-    private Item mockItem;
+    private Order mockOrder;
     @Mock
     private CartItemRepo cartItemRepo;
     @Mock
-    private ItemRepo itemRepo;
+    private OrderRepo orderRepo;
+    @Mock
+    private OrderItemRepo orderItemRepo;
     @Mock
     private AccountSessionManager manager;
     @InjectMocks
-    private CartItemService service;
+    private OrderService service;
 
     @BeforeEach
     public void setUp() {
@@ -48,24 +52,34 @@ public class CartItemServiceTest {
         mockItemList.add(new CartItem(mockAccount.getCart(), mockItem1, 1));
         mockItemList.add(new CartItem(mockAccount.getCart(), mockItem2, 2));
         mockItemList.add(new CartItem(mockAccount.getCart(), mockItem3, 3));
+        mockOrder = new Order(mockAccount);
+        mockAccount.getOrder().add(mockOrder);
     }
 
     @Test
-    public void testGetTotalSum() {
+    public void createOrderTest(){
+        when(orderRepo.save(new Order())).thenReturn(new Order());
         when(manager.getCurrentUser()).thenReturn(mockAccount);
-        when(cartItemRepo.findCartItemsByCart_Account_Id(1)).thenReturn(new ArrayList<>(mockItemList));
-
-        long totalSum = service.getTotalSum();
-        long expectedTotalSum = (499 + (3950 * 2) + (1299 * 3));
-        assertEquals(expectedTotalSum, totalSum);
+        service.createOrder();
+        assertEquals(2 ,mockAccount.getOrder().size());
     }
-
     @Test
-    public void testAddItemToCart(){
-        when(itemRepo.findById(1)).thenReturn(mockItem);
+    public void convertCartItemToOrderItemTest(){
         when(manager.getCurrentUser()).thenReturn(mockAccount);
-        when(cartItemRepo.save(mockItemList.get(1))).thenReturn(mockItemList.get(0));
-        service.addItemToCart(mockItem.getId(), 1);
-        assertEquals(1, mockAccount.getCart().getCartItems().size());
+        when(cartItemRepo.findCartItemsByCart_Account_Id(1)).thenReturn(mockItemList);
+        when(orderRepo.findFirstByAccount_IdOrderByIdDesc(1)).thenReturn(mockOrder);
+        when(orderItemRepo.save(new OrderItem())).thenReturn(new OrderItem());
+        service.convertCartItemToOrderItem();
+        assertEquals(3, mockOrder.getOrderItemList().size());
+    }
+    @Test
+    public void clearCartTest(){
+        when(manager.getCurrentUser()).thenReturn(mockAccount);
+        mockAccount.getCart().getCartItems().add(mockItemList.get(0));
+        mockAccount.getCart().getCartItems().add(mockItemList.get(1));
+        mockAccount.getCart().getCartItems().add(mockItemList.get(2));
+        doNothing().when(cartItemRepo).deleteAllInBatch(mockAccount.getCart().getCartItems());
+        service.clearCart();
+        assertEquals(0, mockAccount.getCart().getCartItems().size());
     }
 }

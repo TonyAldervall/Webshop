@@ -18,8 +18,6 @@ import java.util.Set;
 @Service
 public class OrderService {
     @Autowired
-    AccountRepo accountRepo;
-    @Autowired
     OrderRepo orderRepo;
     @Autowired
     OrderItemRepo orderItemRepo;
