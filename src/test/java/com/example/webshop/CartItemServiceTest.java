@@ -69,5 +69,6 @@ public class CartItemServiceTest {
         when(manager.getCurrentUser()).thenReturn(mockAccount);
         when(cartItemRepo.save(mockItemList.get(1))).thenReturn(mockItemList.get(0));
         service.addItemToCart(mockItem.getId(), 1);
+        assertEquals(1, mockAccount.getCart().getCartItems().size());
     }
 }
